@@ -1,0 +1,76 @@
+<div class="entete">
+  <div>
+    <h1>Bonjour, {{ user.nom }}</h1>
+    <p class="sous">{{ dateTexte }}</p>
+  </div>
+  <a routerLink="/depenses" class="btn btn-vert">+ Ajouter une dépense</a>
+</div>
+
+<!-- 4 cartes -->
+<div class="cartes">
+  <div class="stat">
+    <small>Salaire mensuel</small>
+    <strong>{{ user.salaire | number:'1.3-3' }} DT</strong>
+  </div>
+  <div class="stat">
+    <small>Total dépensé</small>
+    <strong class="rouge">{{ total | number:'1.3-3' }} DT</strong>
+    <span class="sous">{{ pourcent | number:'1.0-0' }} % du salaire</span>
+  </div>
+  <div class="stat sombre">
+    <small>Montant restant</small>
+    <strong>{{ restant | number:'1.3-3' }} DT</strong>
+    <span>{{ joursRestants }} jours avant la fin du mois</span>
+  </div>
+  <div class="stat">
+    <small>Aujourd'hui</small>
+    <strong>{{ totalAujourdhui | number:'1.3-3' }} DT</strong>
+    <span class="sous">{{ duJour.length }} dépenses</span>
+  </div>
+</div>
+
+<div class="grille2">
+  <!-- graphique : 6 derniers jours -->
+  <div class="carte">
+    <div class="haut"><h3>6 derniers jours</h3><b>{{ totalJours | number:'1.3-3' }} DT</b></div>
+    <div class="barres">
+      @for (j of jours; track $index) {
+        <div class="col">
+          <div class="val">{{ j.valeur | number:'1.1-1' }}</div>
+          <!-- hauteur en px proportionnelle à la valeur (max 150px) -->
+          <div class="bar" [class.dernier]="$last" [style.height.px]="j.valeur / maxJour * 150"></div>
+          <div class="lab">{{ j.label }}</div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- principales catégories -->
+  <div class="carte">
+    <h3>Principales catégories</h3>
+    @for (c of categories; track c.nom) {
+      <div class="haut"><span>{{ c.nom }}</span><b>{{ c.montant | number:'1.3-3' }} DT</b></div>
+      <div class="piste"><div [style.width.%]="largeur(c.montant)"></div></div>
+    } @empty {
+      <p class="sous">Aucune dépense ce mois.</p>
+    }
+  </div>
+</div>
+
+<!-- dépenses d'aujourd'hui -->
+<div class="carte">
+  <div class="haut"><h3>Dépenses d'aujourd'hui</h3><a routerLink="/depenses" class="vert">Tout voir</a></div>
+  <table>
+    <tbody>
+      @for (d of duJour; track d.id) {
+        <tr>
+          <td><b>{{ d.description }}</b></td>
+          <td class="sous">{{ d.categorie }}</td>
+          <td class="droite"><b>{{ d.montant | number:'1.3-3' }} DT</b></td>
+        </tr>
+      } @empty {
+        <tr><td class="sous">Rien aujourd'hui.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>

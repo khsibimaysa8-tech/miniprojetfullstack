@@ -1,0 +1,77 @@
+<h1>Mes dépenses</h1>
+<p class="sous">Ajoutez, modifiez ou supprimez vos dépenses.</p>
+
+<div class="depenses-grille">
+
+  <!-- colonne gauche : filtres + tableau -->
+  <div>
+    <div class="filtres">
+      <input [(ngModel)]="recherche" placeholder="Rechercher une dépense">
+      <select [(ngModel)]="filtreCat">
+        <option value="">Toutes les catégories</option>
+        @for (c of api.categories; track c) { <option [value]="c">{{ c }}</option> }
+      </select>
+      <select [(ngModel)]="filtrePeriode">
+        <option value="tout">Toutes les dates</option>
+        <option value="aujourdhui">Aujourd'hui</option>
+        <option value="deux">Aujourd'hui et hier</option>
+        <option value="semaine">7 derniers jours</option>
+        <option value="mois">Ce mois</option>
+      </select>
+    </div>
+
+    <div class="carte">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Description</th><th>Catégorie</th><th class="droite">Montant</th><th class="droite">Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (d of filtrees; track d.id) {
+            <tr>
+              <td>{{ d.date.substring(8, 10) }}/{{ d.date.substring(5, 7) }}</td>
+              <td><b>{{ d.description }}</b></td>
+              <td><span class="badge" [attr.data-cat]="d.categorie">{{ d.categorie }}</span></td>
+              <td class="droite"><b>{{ d.montant | number:'1.3-3' }} DT</b></td>
+              <td class="droite">
+                <button class="btn" (click)="modifier(d)">Modifier</button>
+                <button class="btn btn-rouge" (click)="supprimer(d)">Supprimer</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="sous">Aucune dépense.</td></tr>
+          }
+        </tbody>
+      </table>
+      <div class="pied-tableau">
+        <span class="sous">{{ filtrees.length }} dépenses affichées</span>
+        <b>Total : {{ total | number:'1.3-3' }} DT</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- colonne droite : formulaire -->
+  <div class="carte">
+    <h3>{{ idEdition ? 'Modifier la dépense' : 'Nouvelle dépense' }}</h3>
+
+    <label>Montant (DT)</label>
+    <input type="number" step="0.001" [(ngModel)]="montant" placeholder="0,000">
+
+    <label>Description</label>
+    <input [(ngModel)]="description" placeholder="Ex. : Déjeuner">
+
+    <label>Catégorie</label>
+    <select [(ngModel)]="categorie">
+      @for (c of api.categories; track c) { <option [value]="c">{{ c }}</option> }
+    </select>
+
+    <label>Date</label>
+    <input type="date" [(ngModel)]="date">
+
+    @if (erreur) { <div class="erreur">{{ erreur }}</div> }
+
+    <button class="btn btn-vert large" (click)="enregistrer()">
+      {{ idEdition ? 'Enregistrer' : 'Ajouter la dépense' }}
+    </button>
+    <button class="btn large" (click)="annuler()">Annuler</button>
+  </div>
+</div>

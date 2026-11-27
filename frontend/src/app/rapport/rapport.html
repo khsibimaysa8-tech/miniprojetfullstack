@@ -1,0 +1,59 @@
+<div class="entete">
+  <div>
+    <h1>{{ titre }}</h1>
+    <p class="sous">{{ sousTitre }}</p>
+  </div>
+  <div class="no-print" style="display:flex; gap:12px">
+    <div class="onglets">
+      <button [class.actif]="mode === 'semaine'" (click)="choisir('semaine')">Semaine</button>
+      <button [class.actif]="mode === 'mois'" (click)="choisir('mois')">Mois</button>
+    </div>
+    <button class="btn btn-vert" (click)="exporter()">Exporter en PDF</button>
+  </div>
+</div>
+
+<div class="cartes">
+  <div class="stat"><small>Salaire</small><strong>{{ user.salaire | number:'1.3-3' }} DT</strong></div>
+  <div class="stat"><small>Dépensé ({{ pourcent | number:'1.0-0' }} %)</small><strong class="rouge">{{ total | number:'1.3-3' }} DT</strong></div>
+  <div class="stat sombre"><small>Restant du mois</small><strong>{{ restant | number:'1.3-3' }} DT</strong></div>
+  <div class="stat"><small>Moyenne par jour</small><strong>{{ moyenne | number:'1.3-3' }} DT</strong></div>
+</div>
+
+<div class="grille2 rapport">
+  <!-- graphique -->
+  <div class="carte">
+    <h3>{{ mode === 'mois' ? 'Dépenses par semaine (DT)' : 'Dépenses par jour (DT)' }}</h3>
+    <div class="barres">
+      @for (b of barres; track $index) {
+        <div class="col">
+          <div class="val">{{ b.valeur | number:'1.1-1' }}</div>
+          <div class="bar dernier" [style.height.px]="b.valeur / maxBarre * 150"></div>
+          <div class="lab">{{ b.label }}</div>
+        </div>
+      }
+    </div>
+    <div class="alerte">{{ message }}</div>
+  </div>
+
+  <!-- tableau par catégorie -->
+  <div class="carte">
+    <h3>Détail par catégorie</h3>
+    <table>
+      <thead><tr><th>Catégorie</th><th class="droite">Montant</th><th class="droite">Part</th></tr></thead>
+      <tbody>
+        @for (c of categories; track c.nom) {
+          <tr>
+            <td>{{ c.nom }}</td>
+            <td class="droite">{{ c.montant | number:'1.3-3' }} DT</td>
+            <td class="droite">{{ c.part | number:'1.1-1' }} %</td>
+          </tr>
+        }
+        <tr>
+          <td><b>Total</b></td>
+          <td class="droite"><b>{{ total | number:'1.3-3' }} DT</b></td>
+          <td class="droite"><b>100 %</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
