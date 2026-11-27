@@ -1,0 +1,49 @@
+<!-- Barre du haut -->
+<header class="nav">
+  <div class="logo"><span>M</span> Masroufi</div>
+  <div class="liens">
+    <button class="lien" (click)="defiler()">Kifech temchi</button>
+    <a routerLink="/login" class="lien">Se connecter</a>
+    <a routerLink="/login" [queryParams]="{ mode: 'inscription' }" class="btn btn-vert">Créer un compte</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <span class="etiquette">Fait pour le quotidien tounsi</span>
+    <h1>Win mchet <em>el chahriya ?</em></h1>
+    <p class="sous grand">Café, louage, casse-croûte... Sajjel kol dinar w chouf
+      <b>9addech b9alek</b> 9bal ekher chhar.</p>
+    <div class="boutons">
+      <a routerLink="/login" [queryParams]="{ mode: 'inscription' }" class="btn btn-vert">Nabda tawa</a>
+      <a routerLink="/login" class="btn btn-blanc">3andi compte</a>
+    </div>
+  </div>
+
+  <div class="hero-carte">
+    <div class="interieur">
+      <small class="sous">Lyoum sraft</small>
+      <div class="gros">13,500 <small>DT</small></div>
+      <hr>
+      <div class="ligne"><span>Capucin</span><b>2,500 DT</b></div>
+      <div class="ligne"><span>Louage</span><b>5,000 DT</b></div>
+      <div class="ligne"><span>Casse-croûte</span><b>6,000 DT</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 étapes -->
+<section class="etapes" id="etapes">
+  <div class="carte"><b><span class="vert">1.</span> Sajjel</b><p class="sous">Sraft haja ? Zidha fi thwani.</p></div>
+  <div class="carte"><b><span class="vert">2.</span> Tabba3</b><p class="sous">Chouf, baddel wala fasa5 dépenses mte3ek.</p></div>
+  <div class="carte"><b><span class="vert">3.</span> Waffar</b><p class="sous">Rapport kol jom3a w kol chhar.</p></div>
+</section>
+
+<!-- Bandeau final -->
+<section class="bandeau">
+  <h2>El dinar li ma tsajlouch, tensah.</h2>
+  <a routerLink="/login" [queryParams]="{ mode: 'inscription' }" class="btn btn-menthe">Créer mon compte</a>
+</section>
+
+<footer class="pied">Masroufi © 2026 · Mini projet Angular &amp; Spring Boot</footer>

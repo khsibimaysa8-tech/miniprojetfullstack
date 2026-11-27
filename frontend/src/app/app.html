@@ -1,0 +1,18 @@
+<div [class.layout]="avecMenu">
+
+  @if (avecMenu) {
+    <aside class="sidebar no-print">
+      <div class="logo"><span>M</span> Masroufi</div>
+      <nav>
+        <a routerLink="/dashboard" routerLinkActive="actif">Dashboard</a>
+        <a routerLink="/depenses" routerLinkActive="actif">Dépenses</a>
+        <a routerLink="/rapport" routerLinkActive="actif">Rapports</a>
+      </nav>
+      <button class="deconnexion" (click)="deconnecter()">Se déconnecter</button>
+    </aside>
+  }
+
+  <main [class.contenu]="avecMenu">
+    <router-outlet />
+  </main>
+</div>

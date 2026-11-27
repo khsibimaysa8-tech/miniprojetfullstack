@@ -1,0 +1,59 @@
+<div class="auth">
+  <!-- côté gauche -->
+  <div class="auth-gauche">
+    <div class="logo"><span>M</span> Masroufi</div>
+    <div>
+      <h1>Votre budget,<br>sous contrôle.</h1>
+      <p>Une dépense notée chaque jour, un rapport clair à la fin de la semaine et du mois.</p>
+      <div class="etape">1. Saisissez votre salaire mensuel</div>
+      <div class="etape">2. Ajoutez vos dépenses du jour</div>
+      <div class="etape">3. Suivez ce qui vous reste</div>
+    </div>
+    <small>Mini projet · Angular et Spring Boot</small>
+  </div>
+
+  <!-- côté droit -->
+  <div class="auth-droite">
+    <div class="formulaire">
+      <div class="onglets">
+        <button [class.actif]="mode === 'connexion'" (click)="changer('connexion')">Connexion</button>
+        <button [class.actif]="mode === 'inscription'" (click)="changer('inscription')">Inscription</button>
+      </div>
+
+      @if (mode === 'connexion') {
+        <h2>Bon retour</h2>
+        <p class="sous">Connectez-vous pour voir vos dépenses.</p>
+
+        <label>Adresse e-mail</label>
+        <input type="email" [(ngModel)]="email" placeholder="nom@exemple.com">
+        <label>Mot de passe</label>
+        <input type="password" [(ngModel)]="password" placeholder="Votre mot de passe">
+
+        <div class="ligne-options">
+          <label class="inline"><input type="checkbox"> Se souvenir de moi</label>
+          <span class="vert">Mot de passe oublié ?</span>
+        </div>
+
+        @if (erreur) { <div class="erreur">{{ erreur }}</div> }
+        <button class="btn btn-vert large" (click)="seConnecter()">Se connecter</button>
+      } @else {
+        <h2>Créer un compte</h2>
+        <p class="sous">Quelques informations suffisent.</p>
+
+        <label>Nom complet</label>
+        <input [(ngModel)]="nom" placeholder="Votre nom">
+        <label>Adresse e-mail</label>
+        <input type="email" [(ngModel)]="email" placeholder="nom@exemple.com">
+        <label>Salaire mensuel (DT)</label>
+        <input type="number" [(ngModel)]="salaire" placeholder="2000">
+        <label>Mot de passe</label>
+        <input type="password" [(ngModel)]="password" placeholder="8 caractères minimum">
+        <label>Confirmer le mot de passe</label>
+        <input type="password" [(ngModel)]="confirmation" placeholder="Répétez le mot de passe">
+
+        @if (erreur) { <div class="erreur">{{ erreur }}</div> }
+        <button class="btn btn-vert large" (click)="creerCompte()">Créer mon compte</button>
+      }
+    </div>
+  </div>
+</div>
